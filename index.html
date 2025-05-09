@@ -10,7 +10,7 @@
     }
     table {
       border-collapse: collapse;
-      width: 400px;
+      width: 500px;
     }
     th, td {
       padding: 8px;
@@ -46,11 +46,21 @@
     const denominations = [100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100];
     const tbody = document.getElementById("uangTable");
 
+    // Format angka ke Rupiah
+    function formatRupiah(angka) {
+      return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Ambil angka dari input (hapus karakter non-digit)
+    function extractNumber(rpString) {
+      return parseInt(rpString.replace(/[^\d]/g, '')) || 0;
+    }
+
     denominations.forEach(dan => {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>Rp ${dan.toLocaleString()}</td>
-        <td><input type="number" min="0" placeholder="0" data-dan="${dan}"></td>
+        <td><input type="text" placeholder="Rp0" data-dan="${dan}"></td>
         <td class="jumlahLembar">-</td>
         <td class="sisaLebih">-</td>
       `;
@@ -60,14 +70,16 @@
     tbody.addEventListener("input", function(e) {
       if (e.target.tagName === "INPUT") {
         const danom = parseInt(e.target.dataset.dan);
-        const value = parseInt(e.target.value) || 0;
+        const raw = extractNumber(e.target.value);
+        const formatted = formatRupiah(raw);
+        e.target.value = formatted;
 
-        const jumlah = Math.floor(value / danom);
-        const sisa = value % danom;
+        const jumlah = Math.floor(raw / danom);
+        const sisa = raw % danom;
 
         const tr = e.target.closest("tr");
         tr.querySelector(".jumlahLembar").textContent = jumlah;
-        tr.querySelector(".sisaLebih").innerHTML = sisa > 0 ? `<span class="lebih">Lebih Rp ${sisa.toLocaleString()}</span>` : "-";
+        tr.querySelector(".sisaLebih").innerHTML = sisa > 0 ? `<span class="lebih">Lebih ${formatRupiah(sisa)}</span>` : "-";
       }
     });
   </script>
