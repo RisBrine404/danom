@@ -70,6 +70,20 @@
       color: #e74c3c;
     }
 
+    .copy-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .copy-btn:hover {
+      background-color: #218838;
+    }
+
     @media (max-width: 480px) {
       th, td {
         font-size: 13px;
@@ -80,6 +94,11 @@
         font-size: 13px;
         padding: 6px;
       }
+
+      .copy-btn {
+        font-size: 12px;
+        padding: 5px 8px;
+      }
     }
   </style>
 </head>
@@ -89,6 +108,7 @@
     <table>
       <thead>
         <tr>
+          <th>Salin</th>
           <th>Denominasi</th>
           <th>Nilai Uang</th>
           <th>Jumlah Lembar</th>
@@ -114,6 +134,7 @@
     denominations.forEach(dan => {
       const row = document.createElement("tr");
       row.innerHTML = `
+        <td><button class="copy-btn" onclick="salinJumlah(this)">📋</button></td>
         <td>Rp ${dan.toLocaleString()}</td>
         <td><input type="text" placeholder="Rp0" data-dan="${dan}"></td>
         <td class="jumlahLembar">-</td>
@@ -137,6 +158,20 @@
         tr.querySelector(".sisaLebih").innerHTML = sisa > 0 ? `<span class="lebih">Lebih ${formatRupiah(sisa)}</span>` : "-";
       }
     });
+
+    function salinJumlah(btn) {
+      const tr = btn.closest("tr");
+      const jumlahText = tr.querySelector(".jumlahLembar").textContent.trim();
+      if (jumlahText === "-" || jumlahText === "") {
+        alert("Belum ada jumlah lembar untuk disalin.");
+        return;
+      }
+      navigator.clipboard.writeText(jumlahText).then(() => {
+        alert("Jumlah lembar berhasil disalin: " + jumlahText);
+      }).catch(() => {
+        alert("Gagal menyalin ke clipboard.");
+      });
+    }
   </script>
 </body>
 </html>
