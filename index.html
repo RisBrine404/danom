@@ -108,11 +108,11 @@
     <table>
       <thead>
         <tr>
-          <th>Salin</th>
           <th>Denominasi</th>
           <th>Nilai Uang</th>
           <th>Jumlah Lembar</th>
           <th>Sisa</th>
+          <th>Salin</th>
         </tr>
       </thead>
       <tbody id="uangTable"></tbody>
@@ -134,11 +134,11 @@
     denominations.forEach(dan => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><button class="copy-btn" onclick="salinJumlah(this)">📋</button></td>
         <td>Rp ${dan.toLocaleString()}</td>
         <td><input type="text" placeholder="Rp0" data-dan="${dan}"></td>
         <td class="jumlahLembar">-</td>
         <td class="sisaLebih">-</td>
+        <td><button class="copy-btn" onclick="salinJumlah(this)">📋</button></td>
       `;
       tbody.appendChild(row);
     });
