@@ -100,6 +100,35 @@
         padding: 5px 8px;
       }
     }
+    .checklist-container {
+    margin-top: 30px;
+  }
+
+  .checklist-container h3 {
+    margin-bottom: 10px;
+    color: #007bff;
+    font-size: 18px;
+  }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+
+  .checklist-item input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+  }
   </style>
 </head>
 <body>
@@ -117,6 +146,37 @@
       </thead>
       <tbody id="uangTable"></tbody>
     </table>
+    <!-- Tambahkan ini di dalam <div class="container"> setelah </table> -->
+<div class="checklist-container">
+  <h3>Checklist Proses</h3>
+  <div class="checklist-grid">
+    <label class="checklist-item">
+      <input type="checkbox"> Return
+    </label>
+    <label class="checklist-item">
+      <input type="checkbox"> Sortir
+    </label>
+    <label class="checklist-item">
+      <input type="checkbox"> Cek Loading
+    </label>
+    <label class="checklist-item">
+      <input type="checkbox"> Schedule
+    </label>
+    <label class="checklist-item">
+      <input type="checkbox"> Start work
+    </label>
+    <label class="checklist-item">
+      <input type="checkbox"> Pick up
+    </label>
+    <label class="checklist-item">
+      <input type="checkbox"> Arrive
+    </label>
+    <label class="checklist-item">
+      <input type="checkbox"> Completed
+    </label>
+  </div>
+</div>
+
   </div>
 
   <script>
