@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalkulator Lembaran Uang</title>
-  <link rel="icon" type="image/png" href="website.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kalkulator Lembaran Uang & Matematika</title>
   <style>
     body {
       margin: 0;
@@ -12,8 +11,7 @@
       background-color: #f0f4f8;
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      align-items: flex-start;
       padding: 20px;
     }
 
@@ -26,15 +24,16 @@
       max-width: 600px;
     }
 
-    h2 {
+    h2, h3 {
       text-align: center;
-      margin-bottom: 20px;
       color: #333;
+      margin-bottom: 10px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-bottom: 20px;
     }
 
     th, td {
@@ -48,7 +47,7 @@
       color: white;
     }
 
-    input {
+    input[type="text"] {
       width: 100%;
       padding: 8px;
       border: 1px solid #ccc;
@@ -84,31 +83,8 @@
       background-color: #218838;
     }
 
-    @media (max-width: 480px) {
-      th, td {
-        font-size: 13px;
-        padding: 8px;
-      }
-
-      input {
-        font-size: 13px;
-        padding: 6px;
-      }
-
-      .copy-btn {
-        font-size: 12px;
-        padding: 5px 8px;
-      }
-    }
-
     .checklist-container {
       margin-top: 30px;
-    }
-
-    .checklist-container h3 {
-      margin-bottom: 10px;
-      color: #007bff;
-      font-size: 18px;
     }
 
     .checklist-grid {
@@ -131,49 +107,59 @@
       transform: scale(1.2);
     }
 
-    .kalkulator-container {
-      margin: 30px 0;
+    /* Kalkulator */
+    .calculator {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     }
 
-    .kalkulator-container h3 {
-      color: #007bff;
+    .calculator #display {
+      width: 100%;
+      height: 40px;
       font-size: 18px;
       margin-bottom: 10px;
-    }
-
-    .kalkulator-container input {
-      width: calc(50% - 10px);
-      display: inline-block;
-      margin-right: 10px;
+      padding: 10px;
       text-align: right;
-    }
-
-    .kalkulator-container select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 10px;
-      margin-bottom: 10px;
       border-radius: 8px;
-      font-size: 14px;
+      border: 1px solid #ccc;
     }
 
-    .kalkulator-container button {
-      padding: 8px 16px;
-      font-size: 14px;
+    .calculator .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .calculator .buttons button {
+      padding: 15px;
+      font-size: 18px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       background-color: #007bff;
       color: white;
       cursor: pointer;
     }
 
-    .kalkulator-container button:hover {
+    .calculator .buttons button:hover {
       background-color: #0056b3;
     }
 
-    .hasil-kalkulator {
-      font-weight: bold;
-      margin-top: 10px;
+    .calculator .buttons button.zero {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 480px) {
+      .calculator .buttons button {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      input[type="text"] {
+        font-size: 13px;
+      }
     }
   </style>
 </head>
@@ -193,22 +179,36 @@
       <tbody id="uangTable"></tbody>
     </table>
 
-    <!-- Kalkulator -->
-    <div class="kalkulator-container">
-      <h3>Kalkulator</h3>
-      <input type="number" id="angka1" placeholder="Angka 1">
-      <input type="number" id="angka2" placeholder="Angka 2">
-      <select id="operator">
-        <option value="+">Tambah (+)</option>
-        <option value="-">Kurang (-)</option>
-        <option value="*">Kali (×)</option>
-        <option value="/">Bagi (÷)</option>
-      </select>
-      <button onclick="hitungKalkulator()">Hitung</button>
-      <div class="hasil-kalkulator" id="hasilKalkulator">Hasil: -</div>
+    <h3>Kalkulator Matematika</h3>
+    <div class="calculator">
+      <input type="text" id="display" disabled />
+      <div class="buttons">
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="backspace()">←</button>
+        <button onclick="append('/')">÷</button>
+        <button onclick="append('*')">×</button>
+
+        <button onclick="append('7')">7</button>
+        <button onclick="append('8')">8</button>
+        <button onclick="append('9')">9</button>
+        <button onclick="append('-')">−</button>
+
+        <button onclick="append('4')">4</button>
+        <button onclick="append('5')">5</button>
+        <button onclick="append('6')">6</button>
+        <button onclick="append('+')">+</button>
+
+        <button onclick="append('1')">1</button>
+        <button onclick="append('2')">2</button>
+        <button onclick="append('3')">3</button>
+        <button onclick="calculate()">=</button>
+
+        <button onclick="append('0')" class="zero">0</button>
+        <button onclick="append('.')">.</button>
+        <button onclick="copyResult()">📋</button>
+      </div>
     </div>
 
-    <!-- Checklist Proses -->
     <div class="checklist-container">
       <h3>Checklist Proses</h3>
       <div class="checklist-grid">
@@ -298,22 +298,41 @@
       });
     }
 
-    function hitungKalkulator() {
-      const angka1 = parseFloat(document.getElementById("angka1").value);
-      const angka2 = parseFloat(document.getElementById("angka2").value);
-      const operator = document.getElementById("operator").value;
-      let hasil = "-";
+    // Kalkulator Matematika
+    function append(char) {
+      const display = document.getElementById("display");
+      display.value += char;
+    }
 
-      if (!isNaN(angka1) && !isNaN(angka2)) {
-        switch (operator) {
-          case '+': hasil = angka1 + angka2; break;
-          case '-': hasil = angka1 - angka2; break;
-          case '*': hasil = angka1 * angka2; break;
-          case '/': hasil = angka2 !== 0 ? angka1 / angka2 : "Tak hingga"; break;
-        }
+    function clearDisplay() {
+      document.getElementById("display").value = "";
+    }
+
+    function backspace() {
+      const display = document.getElementById("display");
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      const display = document.getElementById("display");
+      try {
+        display.value = eval(display.value);
+      } catch {
+        display.value = "Error";
       }
+    }
 
-      document.getElementById("hasilKalkulator").textContent = "Hasil: " + hasil;
+    function copyResult() {
+      const result = document.getElementById("display").value;
+      if (result.trim() === '') {
+        alert("Tidak ada hasil untuk disalin.");
+        return;
+      }
+      navigator.clipboard.writeText(result).then(() => {
+        alert("Hasil berhasil disalin: " + result);
+      }).catch(() => {
+        alert("Gagal menyalin hasil.");
+      });
     }
   </script>
 </body>
