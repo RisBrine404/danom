@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Lembaran Uang</title>
+  <link rel="icon" type="image/png" href="website.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #eef2f3, #8e9eab);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 700px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+      font-size: 26px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+    }
+
+    th, td {
+      padding: 14px 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      text-align: right;
+      font-size: 14px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .jumlahLembar {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .sisaLebih {
+      font-size: 13px;
+    }
+
+    .lebih {
+      color: #e74c3c;
+    }
+
+    .copy-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    .copy-btn:hover {
+      background-color: #218838;
+    }
+
+    .calculator {
+      margin: 30px 0;
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .calculator input[type="text"] {
+      width: 100%;
+      font-size: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .calc-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .calc-buttons button {
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .calc-buttons button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 480px) {
+      th, td {
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      .copy-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+
+      .calc-buttons button {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+
+    .checklist-container {
+      margin-top: 30px;
+    }
+
+    .checklist-container h3 {
+      margin-bottom: 10px;
+      color: #007bff;
+      font-size: 18px;
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      background-color: #f8f9fa;
+      padding: 8px 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .checklist-item input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Kalkulator Lembaran Uang</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Denominasi</th>
+          <th>Nilai Uang</th>
+          <th>Jumlah Lembar</th>
+          <th>Sisa</th>
+          <th>Salin</th>
+        </tr>
+      </thead>
+      <tbody id="uangTable"></tbody>
+    </table>
+
+    <div class="calculator">
+      <input type="text" id="calc-display" placeholder="0" readonly>
+      <div class="calc-buttons">
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('/')">÷</button>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('*')">×</button>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('-')">−</button>
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay('.')">.</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="appendToDisplay('+')">+</button>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="copyResult()" colspan="2">📋</button>
+      </div>
+    </div>
+
+    <div class="checklist-container">
+      <h3>Checklist Proses</h3>
+      <div class="checklist-grid">
+        <label class="checklist-item"><input type="checkbox"> Return</label>
+        <label class="checklist-item"><input type="checkbox"> Sortir</label>
+        <label class="checklist-item"><input type="checkbox"> Cek Loading</label>
+        <label class="checklist-item"><input type="checkbox"> Schedule</label>
+        <label class="checklist-item"><input type="checkbox"> Start work</label>
+        <label class="checklist-item"><input type="checkbox"> Pick up</label>
+        <label class="checklist-item"><input type="checkbox"> Arrive</label>
+        <label class="checklist-item"><input type="checkbox"> Completed</label>
+      </div>
+    </div>
+
+    <div class="checklist-container">
+      <h3>Checklist Bank</h3>
+      <div class="checklist-grid">
+        <label class="checklist-item"><input type="checkbox"> MANDIRI (302)</label>
+        <label class="checklist-item"><input type="checkbox"> BSI (26)</label>
+        <label class="checklist-item"><input type="checkbox"> BTN (14)</label>
+        <label class="checklist-item"><input type="checkbox"> DKI (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BANK SUMUT (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BANK JAMBI (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BJB (5)</label>
+        <label class="checklist-item"><input type="checkbox"> BNI (1)</label>
+        <label class="checklist-item"><input type="checkbox"> MUAMALAT (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BUKOPIN (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BANK JAGO (0)</label>
+        <label class="checklist-item"><input type="checkbox"> KHASANAH UGARTA (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BANK MEGA (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BRI (0)</label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const denominations = [100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100];
+    const tbody = document.getElementById("uangTable");
+
+    function formatRupiah(angka) {
+      return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function extractNumber(rpString) {
+      return parseInt(rpString.replace(/[^\d]/g, '')) || 0;
+    }
+
+    denominations.forEach(dan => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>Rp ${dan.toLocaleString()}</td>
+        <td><input type="text" placeholder="Rp0" data-dan="${dan}"></td>
+        <td class="jumlahLembar">-</td>
+        <td class="sisaLebih">-</td>
+        <td><button class="copy-btn" onclick="salinJumlah(this)">📋</button></td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    tbody.addEventListener("input", function(e) {
+      if (e.target.tagName === "INPUT") {
+        const danom = parseInt(e.target.dataset.dan);
+        const raw = extractNumber(e.target.value);
+        const formatted = formatRupiah(raw);
+        e.target.value = formatted;
+
+        const jumlah = Math.floor(raw / danom);
+        const sisa = raw % danom;
+
+        const tr = e.target.closest("tr");
+        tr.querySelector(".jumlahLembar").textContent = jumlah;
+        tr.querySelector(".sisaLebih").innerHTML = sisa > 0 ? `<span class="lebih">Lebih ${formatRupiah(sisa)}</span>` : "-";
+      }
+    });
+
+    function salinJumlah(btn) {
+      const tr = btn.closest("tr");
+      const jumlahText = tr.querySelector(".jumlahLembar").textContent.trim();
+      if (jumlahText === "-" || jumlahText === "") {
+        alert("Belum ada jumlah lembar untuk disalin.");
+        return;
+      }
+      navigator.clipboard.writeText(jumlahText).then(() => {
+        alert("Jumlah lembar berhasil disalin: " + jumlahText);
+      }).catch(() => {
+        alert("Gagal menyalin ke clipboard.");
+      });
+    }
+
+    const display = document.getElementById("calc-display");
+    let calcValue = "";
+
+    function appendToDisplay(value) {
+      calcValue += value;
+      display.value = calcValue;
+    }
+
+    function clearDisplay() {
+      calcValue = "";
+      display.value = "";
+    }
+
+    function calculate() {
+      try {
+        calcValue = eval(calcValue).toString();
+        display.value = calcValue;
+      } catch {
+        display.value = "Error";
+      }
+    }
+
+    function copyResult() {
+      if (display.value.trim() !== "") {
+        navigator.clipboard.writeText(display.value).then(() => {
+          alert("Hasil disalin: " + display.value);
+        });
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.key >= '0' && e.key <= '9') || ['+', '-', '*', '/', '.'].includes(e.key)) {
+        appendToDisplay(e.key);
+      } else if (e.key === 'Enter') {
+        calculate();
+      } else if (e.key === 'Backspace') {
+        calcValue = calcValue.slice(0, -1);
+        display.value = calcValue;
+      }
+    });
+  </script>
+</body>
+</html>
