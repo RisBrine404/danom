@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Lembaran Uang</title>
+  <link rel="icon" type="image/png" href="website.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: right;
+      font-size: 14px;
+    }
+
+    .jumlahLembar {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .sisaLebih {
+      font-size: 13px;
+    }
+
+    .lebih {
+      color: #e74c3c;
+    }
+
+    .copy-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .copy-btn:hover {
+      background-color: #218838;
+    }
+
+    @media (max-width: 480px) {
+      th, td {
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      input {
+        font-size: 13px;
+        padding: 6px;
+      }
+
+      .copy-btn {
+        font-size: 12px;
+        padding: 5px 8px;
+      }
+    }
+
+    .checklist-container {
+      margin-top: 30px;
+    }
+
+    .checklist-container h3 {
+      margin-bottom: 10px;
+      color: #007bff;
+      font-size: 18px;
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      background-color: #f8f9fa;
+      padding: 8px 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .checklist-item input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .kalkulator-container {
+      margin: 30px 0;
+    }
+
+    .kalkulator-container h3 {
+      color: #007bff;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .kalkulator-container input {
+      width: calc(50% - 10px);
+      display: inline-block;
+      margin-right: 10px;
+      text-align: right;
+    }
+
+    .kalkulator-container select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .kalkulator-container button {
+      padding: 8px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .kalkulator-container button:hover {
+      background-color: #0056b3;
+    }
+
+    .hasil-kalkulator {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Kalkulator Lembaran Uang</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Denominasi</th>
+          <th>Nilai Uang</th>
+          <th>Jumlah Lembar</th>
+          <th>Sisa</th>
+          <th>Salin</th>
+        </tr>
+      </thead>
+      <tbody id="uangTable"></tbody>
+    </table>
+
+    <!-- Kalkulator -->
+    <div class="kalkulator-container">
+      <h3>Kalkulator</h3>
+      <input type="number" id="angka1" placeholder="Angka 1">
+      <input type="number" id="angka2" placeholder="Angka 2">
+      <select id="operator">
+        <option value="+">Tambah (+)</option>
+        <option value="-">Kurang (-)</option>
+        <option value="*">Kali (×)</option>
+        <option value="/">Bagi (÷)</option>
+      </select>
+      <button onclick="hitungKalkulator()">Hitung</button>
+      <div class="hasil-kalkulator" id="hasilKalkulator">Hasil: -</div>
+    </div>
+
+    <!-- Checklist Proses -->
+    <div class="checklist-container">
+      <h3>Checklist Proses</h3>
+      <div class="checklist-grid">
+        <label class="checklist-item"><input type="checkbox"> Return</label>
+        <label class="checklist-item"><input type="checkbox"> Sortir</label>
+        <label class="checklist-item"><input type="checkbox"> Cek Loading</label>
+        <label class="checklist-item"><input type="checkbox"> Schedule</label>
+        <label class="checklist-item"><input type="checkbox"> Start work</label>
+        <label class="checklist-item"><input type="checkbox"> Pick up</label>
+        <label class="checklist-item"><input type="checkbox"> Arrive</label>
+        <label class="checklist-item"><input type="checkbox"> Completed</label>
+      </div>
+    </div>
+
+    <div class="checklist-container">
+      <h3>Checklist Bank</h3>
+      <div class="checklist-grid">
+        <label class="checklist-item"><input type="checkbox"> MANDIRI (302)</label>
+        <label class="checklist-item"><input type="checkbox"> BSI (26)</label>
+        <label class="checklist-item"><input type="checkbox"> BTN (14)</label>
+        <label class="checklist-item"><input type="checkbox"> DKI (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BANK SUMUT (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BANK JAMBI (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BJB (5)</label>
+        <label class="checklist-item"><input type="checkbox"> BNI (1)</label>
+        <label class="checklist-item"><input type="checkbox"> MUAMALAT (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BUKOPIN (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BANK JAGO (0)</label>
+        <label class="checklist-item"><input type="checkbox"> KHASANAH UGARTA (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BANK MEGA (0)</label>
+        <label class="checklist-item"><input type="checkbox"> BRI (0)</label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const denominations = [100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100];
+    const tbody = document.getElementById("uangTable");
+
+    function formatRupiah(angka) {
+      return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function extractNumber(rpString) {
+      return parseInt(rpString.replace(/[^\d]/g, '')) || 0;
+    }
+
+    denominations.forEach(dan => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>Rp ${dan.toLocaleString()}</td>
+        <td><input type="text" placeholder="Rp0" data-dan="${dan}"></td>
+        <td class="jumlahLembar">-</td>
+        <td class="sisaLebih">-</td>
+        <td><button class="copy-btn" onclick="salinJumlah(this)">📋</button></td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    tbody.addEventListener("input", function(e) {
+      if (e.target.tagName === "INPUT") {
+        const danom = parseInt(e.target.dataset.dan);
+        const raw = extractNumber(e.target.value);
+        const formatted = formatRupiah(raw);
+        e.target.value = formatted;
+
+        const jumlah = Math.floor(raw / danom);
+        const sisa = raw % danom;
+
+        const tr = e.target.closest("tr");
+        tr.querySelector(".jumlahLembar").textContent = jumlah;
+        tr.querySelector(".sisaLebih").innerHTML = sisa > 0 ? `<span class="lebih">Lebih ${formatRupiah(sisa)}</span>` : "-";
+      }
+    });
+
+    function salinJumlah(btn) {
+      const tr = btn.closest("tr");
+      const jumlahText = tr.querySelector(".jumlahLembar").textContent.trim();
+      if (jumlahText === "-" || jumlahText === "") {
+        alert("Belum ada jumlah lembar untuk disalin.");
+        return;
+      }
+      navigator.clipboard.writeText(jumlahText).then(() => {
+        alert("Jumlah lembar berhasil disalin: " + jumlahText);
+      }).catch(() => {
+        alert("Gagal menyalin ke clipboard.");
+      });
+    }
+
+    function hitungKalkulator() {
+      const angka1 = parseFloat(document.getElementById("angka1").value);
+      const angka2 = parseFloat(document.getElementById("angka2").value);
+      const operator = document.getElementById("operator").value;
+      let hasil = "-";
+
+      if (!isNaN(angka1) && !isNaN(angka2)) {
+        switch (operator) {
+          case '+': hasil = angka1 + angka2; break;
+          case '-': hasil = angka1 - angka2; break;
+          case '*': hasil = angka1 * angka2; break;
+          case '/': hasil = angka2 !== 0 ? angka1 / angka2 : "Tak hingga"; break;
+        }
+      }
+
+      document.getElementById("hasilKalkulator").textContent = "Hasil: " + hasil;
+    }
+  </script>
+</body>
+</html>
