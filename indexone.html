@@ -303,22 +303,22 @@
       display.value = "";
     }
 
-    function calculate() {
-      try {
-        let result = eval(calcValue);
-        if (typeof result === "number" && !isNaN(result)) {
-          // Format dengan titik ribuan tanpa Rp
-          calcValue = result.toString();
-          display.value = formatRupiah(Math.floor(result));
-        } else {
-          display.value = "Error";
-          calcValue = "";
-        }
-      } catch {
-        display.value = "Error";
-        calcValue = "";
-      }
+   function calculate() {
+  try {
+    let result = eval(calcValue);
+    if (typeof result === "number" && !isNaN(result)) {
+      calcValue = result.toString();
+      display.value = formatNumberWithDots(Math.floor(result));
+    } else {
+      display.value = "Error";
+      calcValue = "";
     }
+  } catch {
+    display.value = "Error";
+    calcValue = "";
+  }
+}
+
 
     function copyResult() {
       if (display.value.trim() !== "") {
