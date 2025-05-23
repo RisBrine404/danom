@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kalkulator Lembaran Uang</title>
-  <link rel="icon" type="image/png" href="website.png">
+  <link rel="icon" type="image/png" href="website.png" />
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f0f4f8;
       display: flex;
       justify-content: center;
@@ -19,116 +19,155 @@
 
     .container {
       background: white;
-      padding: 20px;
+      padding: 20px 30px 30px 30px;
       border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
       width: 100%;
       max-width: 600px;
+      box-sizing: border-box;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #333;
+      margin-bottom: 25px;
+      color: #222;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-bottom: 25px;
     }
 
     th, td {
-      padding: 12px 8px;
+      padding: 14px 12px;
       border-bottom: 1px solid #ddd;
       text-align: center;
+      font-size: 15px;
+      color: #333;
+      user-select: none;
     }
 
     th {
       background-color: #007bff;
       color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     input {
       width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 9px 12px;
+      border: 1.8px solid #ccc;
+      border-radius: 10px;
       text-align: right;
-      font-size: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #222;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+    }
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0,123,255,0.5);
+      background-color: #fefefe;
     }
 
     .jumlahLembar {
-      font-weight: bold;
-      color: #333;
+      font-weight: 700;
+      color: #111;
     }
 
     .sisaLebih {
       font-size: 13px;
+      color: #555;
     }
 
     .lebih {
       color: #e74c3c;
+      font-weight: 600;
     }
 
     .copy-btn {
       background-color: #28a745;
       color: white;
       border: none;
-      border-radius: 6px;
-      padding: 6px 10px;
+      border-radius: 8px;
+      padding: 7px 14px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 16px;
+      transition: background-color 0.25s ease;
+      user-select: none;
+      box-shadow: 0 3px 8px rgba(40, 167, 69, 0.5);
     }
 
     .copy-btn:hover {
       background-color: #218838;
+      box-shadow: 0 4px 12px rgba(33, 136, 56, 0.7);
     }
 
     @media (max-width: 480px) {
       th, td {
         font-size: 13px;
-        padding: 8px;
+        padding: 10px 8px;
       }
 
       input {
-        font-size: 13px;
-        padding: 6px;
+        font-size: 14px;
+        padding: 8px 10px;
       }
 
       .copy-btn {
-        font-size: 12px;
-        padding: 5px 8px;
+        font-size: 14px;
+        padding: 6px 12px;
       }
     }
+
     .checklist-container {
-    margin-top: 30px;
-  }
+      margin-top: 35px;
+    }
 
-  .checklist-container h3 {
-    margin-bottom: 10px;
-    color: #007bff;
-    font-size: 18px;
-  }
+    .checklist-container h3 {
+      margin-bottom: 12px;
+      color: #007bff;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
 
-  .checklist-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 10px;
-  }
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
 
-  .checklist-item {
-    display: flex;
-    align-items: center;
-    background-color: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      background-color: #f8f9fa;
+      padding: 10px 15px;
+      border-radius: 14px;
+      box-shadow: 0 3px 7px rgba(0,0,0,0.07);
+      font-weight: 600;
+      color: #444;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
 
-  .checklist-item input[type="checkbox"] {
-    margin-right: 10px;
-    transform: scale(1.2);
-  }
+    .checklist-item:hover {
+      background-color: #e9f0ff;
+    }
+
+    .checklist-item input[type="checkbox"] {
+      margin-right: 12px;
+      transform: scale(1.3);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -146,84 +185,84 @@
       </thead>
       <tbody id="uangTable"></tbody>
     </table>
-    <!-- Tambahkan ini di dalam <div class="container"> setelah </table> -->
-<div class="checklist-container">
-  <h3>Checklist Proses</h3>
-  <div class="checklist-grid">
-    <label class="checklist-item">
-      <input type="checkbox"> Return
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> Sortir
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> Cek Loading
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> Schedule
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> Start work
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> Pick up
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> Arrive
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> Completed
-    </label>
-  </div>
-</div>
-    <div class="checklist-container">
-  <h3>Checklist Bank</h3>
-  <div class="checklist-grid">
-    <label class="checklist-item">
-      <input type="checkbox"> MANDIRI (302)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BSI (26)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BTN (14)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> DKI (0)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BANK SUMUT (0)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BANK JAMBI (0)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BJB (5)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BNI (1)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> MUAMALAT (0)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BUKOPIN	(0)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BANK JAGO (0)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> KHASANAH UGARTA (0)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BANK MEGA (0)
-    </label>
-    <label class="checklist-item">
-      <input type="checkbox"> BRI (0)
-    </label>
-  </div>
-</div>
 
+    <div class="checklist-container">
+      <h3>Checklist Proses</h3>
+      <div class="checklist-grid">
+        <label class="checklist-item">
+          <input type="checkbox" /> Return
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> Sortir
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> Cek Loading
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> Schedule
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> Start work
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> Pick up
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> Arrive
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> Completed
+        </label>
+      </div>
+    </div>
+
+    <div class="checklist-container">
+      <h3>Checklist Bank</h3>
+      <div class="checklist-grid">
+        <label class="checklist-item">
+          <input type="checkbox" /> MANDIRI (302)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BSI (26)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BTN (14)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> DKI (0)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BANK SUMUT (0)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BANK JAMBI (0)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BJB (5)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BNI (1)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> MUAMALAT (0)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BUKOPIN (0)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BANK JAGO (0)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> KHASANAH UGARTA (0)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BANK MEGA (0)
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" /> BRI (0)
+        </label>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -231,54 +270,65 @@
     const tbody = document.getElementById("uangTable");
 
     function formatRupiah(angka) {
-      return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      if (!angka && angka !== 0) return '';
+      const angkaStr = angka.toString().replace(/\D/g, '');
+      return angkaStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    function extractNumber(rpString) {
-      return parseInt(rpString.replace(/[^\d]/g, '')) || 0;
+    function extractNumber(str) {
+      return parseInt(str.replace(/[^\d]/g, '')) || 0;
     }
 
-    denominations.forEach(dan => {
+    denominations.forEach((dan) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>Rp ${dan.toLocaleString()}</td>
-        <td><input type="text" placeholder="Rp0" data-dan="${dan}"></td>
+        <td>Rp ${dan.toLocaleString('id-ID')}</td>
+        <td><input type="text" placeholder="0" data-dan="${dan}" inputmode="numeric" autocomplete="off" /></td>
         <td class="jumlahLembar">-</td>
         <td class="sisaLebih">-</td>
-        <td><button class="copy-btn" onclick="salinJumlah(this)">📋</button></td>
+        <td><button class="copy-btn" type="button">📋</button></td>
       `;
       tbody.appendChild(row);
     });
 
-    tbody.addEventListener("input", function(e) {
+    tbody.addEventListener("input", function (e) {
       if (e.target.tagName === "INPUT") {
-        const danom = parseInt(e.target.dataset.dan);
-        const raw = extractNumber(e.target.value);
-        const formatted = formatRupiah(raw);
-        e.target.value = formatted;
+        let rawValue = e.target.value;
+        // Hapus semua karakter bukan digit
+        let numericValue = rawValue.replace(/\D/g, '');
+        // Batasi agar input tidak terlalu panjang (misal max 12 digit)
+        if (numericValue.length > 12) numericValue = numericValue.slice(0, 12);
 
-        const jumlah = Math.floor(raw / danom);
-        const sisa = raw % danom;
+        // Format dengan titik ribuan
+        let formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        e.target.value = formattedValue;
+
+        const danom = parseInt(e.target.dataset.dan);
+        const rawNum = extractNumber(formattedValue);
+        const jumlah = Math.floor(rawNum / danom);
+        const sisa = rawNum % danom;
 
         const tr = e.target.closest("tr");
-        tr.querySelector(".jumlahLembar").textContent = jumlah;
-        tr.querySelector(".sisaLebih").innerHTML = sisa > 0 ? `<span class="lebih">Lebih ${formatRupiah(sisa)}</span>` : "-";
+        tr.querySelector(".jumlahLembar").textContent = jumlah ? jumlah : "-";
+        tr.querySelector(".sisaLebih").innerHTML = sisa > 0 ? `<span class="lebih">Lebih Rp ${sisa.toLocaleString('id-ID')}</span>` : "-";
       }
     });
 
-    function salinJumlah(btn) {
-      const tr = btn.closest("tr");
-      const jumlahText = tr.querySelector(".jumlahLembar").textContent.trim();
-      if (jumlahText === "-" || jumlahText === "") {
-        alert("Belum ada jumlah lembar untuk disalin.");
-        return;
+    tbody.addEventListener("click", function (e) {
+      if (e.target.classList.contains("copy-btn")) {
+        const tr = e.target.closest("tr");
+        const jumlahText = tr.querySelector(".jumlahLembar").textContent.trim();
+        if (jumlahText === "-" || jumlahText === "") {
+          alert("Belum ada jumlah lembar untuk disalin.");
+          return;
+        }
+        navigator.clipboard.writeText(jumlahText).then(() => {
+          alert("Jumlah lembar berhasil disalin: " + jumlahText);
+        }).catch(() => {
+          alert("Gagal menyalin ke clipboard.");
+        });
       }
-      navigator.clipboard.writeText(jumlahText).then(() => {
-        alert("Jumlah lembar berhasil disalin: " + jumlahText);
-      }).catch(() => {
-        alert("Gagal menyalin ke clipboard.");
-      });
-    }
+    });
   </script>
 </body>
 </html>
